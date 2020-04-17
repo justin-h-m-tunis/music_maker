@@ -3,12 +3,41 @@
 	<head>
 		<title>Pitch Detector</title>
 		<link href='http://fonts.googleapis.com/css?family=Alike' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" type="text/css" href="css/mystyle.css">
+		<style>
+			body { font: 14pt 'Arial', sans-serif;}
+			#note { font-size: 164px; }
+			.droptarget { background-color: #348781}
+			div.confident { color: black; }
+			div.vague { color: lightgrey; }
+			#note { display: inline-block; height:180px; text-align: left;}
+			
+			#detector { width: 300px; height: 300px; border: 4px solid gray; border-radius: 8px; text-align: center; padding-top: 10px;}
+			#output { width: 300px; height: 42px; }
+			#flat { display: none; }
+			#sharp { display: none; }
+			.flat #flat { display: inline; }
+			.sharp #sharp { display: inline; }
+			textarea {
+		 	width: 600px;
+		 	height: 90px;
+		 	background-color: yellow;
+		 	font-size: 1em;
+		 	font-weight: bold;
+		 	font-family: Verdana, Arial, Helvetica, sans-serif;
+		 	border: 3px solid black;
+			}
+		</style>
 	</head>
-	<body>
+	<body style="background-color:#9FFDE6;">
+		<img src= "img/music-maker-title.jpg" style = "width:\9000px;height:400px;"/>
 		<script src="js/pitchdetect.js"></script>
 		
 		<p>
+			<h2> Concept</h2>
+			<label for ="Mission"><b>Music Maker's mission:</b></label>
+			<textarea id ="Mission" rows="4" cols="90">Teaches kids about the basic principles behind music and sound. Kids can play a note (or sing a note) into the microphone, then LEDs change color accordingly.
+			</textarea><br>
+
 			<button onclick="this.innerText = togglePlayback()">start using live input</button>
 			<!--<button onclick="updatePitch(0);">sample</button>-->
 		</p>
@@ -37,5 +66,57 @@
 				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 			})();
 		</script>
+		
+		<h2> Tutorial on Hardware</h2>
+		<h3> What You will Need!</h3>
+			<img src= "img/materials.jpg" style = "width:\9000px;height:400px;"/>
+		<h3> Wiring Schematic</h3>
+		<img src= "img/drawn-schematic.jpg" style = "width:\9000px;height:400px;"/>	
+		<h3> Code</h3>
+		<label for ="code"><b>Download:</b></label>
+		<textarea id ="code" rows="4" cols="90">/*Arduino speaker song tutorial
+* This program will play the theme song of the Malayalam movie
+* 'Ennu Ninte Moideen'. The song is 'Mukkathe Penne'.
+* The song is played on the speaker connected to pin 3 and GND.
+* 
+* Created 26 Oct 2015
+* by Akshay James
+* Video at https://www.youtube.com/watch?v=LgtcUxe8fmA
+*/
+
+#include"pitches.h"
+
+// notes in the song 'Mukkathe Penne'
+int melody[] = {
+NOTE_D4, NOTE_G4, NOTE_FS4, NOTE_A4,
+NOTE_G4, NOTE_C5, NOTE_AS4, NOTE_A4,                   
+NOTE_FS4, NOTE_G4, NOTE_A4, NOTE_FS4, NOTE_DS4, NOTE_D4,
+NOTE_C4, NOTE_D4,0,                                 
+
+NOTE_D4, NOTE_G4, NOTE_FS4, NOTE_A4,
+NOTE_G4, NOTE_C5, NOTE_D5, NOTE_C5, NOTE_AS4, NOTE_C5, NOTE_AS4, NOTE_A4,      //29               //8
+NOTE_FS4, NOTE_G4, NOTE_A4, NOTE_FS4, NOTE_DS4, NOTE_D4,
+NOTE_C4, NOTE_D4,0,                                       
+
+NOTE_D4, NOTE_FS4, NOTE_G4, NOTE_A4, NOTE_DS5, NOTE_D5,
+NOTE_C5, NOTE_AS4, NOTE_A4, NOTE_C5,
+NOTE_C4, NOTE_D4, NOTE_DS4, NOTE_FS4, NOTE_D5, NOTE_C5,
+NOTE_AS4, NOTE_A4, NOTE_C5, NOTE_AS4,             //58
+
+NOTE_D4, NOTE_FS4, NOTE_G4, NOTE_A4, NOTE_DS5, NOTE_D5,
+NOTE_C5, NOTE_D5, NOTE_C5, NOTE_AS4, NOTE_C5, NOTE_AS4, NOTE_A4, NOTE_C5, NOTE_G4,
+NOTE_A4, 0, NOTE_AS4, NOTE_A4, 0, NOTE_G4,
+NOTE_G4, NOTE_A4, NOTE_G4, NOTE_FS4, 0,
+
+NOTE_C4, NOTE_D4, NOTE_G4, NOTE_FS4, NOTE_DS4,
+NOTE_C4, NOTE_D4, 0,
+NOTE_C4, NOTE_D4, NOTE_G4, NOTE_FS4, NOTE_DS4,
+NOTE_C4, NOTE_D4, END
+
+};
+		</textarea>
+		
+
+		
 	</body>
 </html>
