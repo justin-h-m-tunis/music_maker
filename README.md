@@ -13,4 +13,4 @@ This website + an Arduino:
 We referenced code from here to enable pitch detection:
 https://github.com/cwilso/PitchDetect
 
-- Mahima, Allison, Jesse, Justin
+\- Mahima, Allison, Jesse, Justin
