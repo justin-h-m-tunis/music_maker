@@ -1,9 +1,16 @@
-# Simple pitch detection
+# Music Maker
 
-I whipped this app up to start experimenting with pitch detection, and also to test live audio input.  It used to perform a naive (zero-crossing based) pitch detection algorithm; now it uses a naively-implemented auto-correlation algorithm in realtime, so it should work well with most monophonic waveforms (although strong harmonics will throw it off a bit).  It works well with whistling (which has a clear, simple waveform); it also works pretty well to tune my guitar.
+### Learning Concept: Teaches kids about the basic principles behind music and sound
 
-Live instance hosted on https://webaudiodemos.appspot.com/pitchdetect/.
+Goal: Kids can play (or sing) notes into the microphone and the LEDs change color accordingly
 
-Check it out, feel free to fork, submit pull requests, etc.  MIT-Licensed - party on.
+This website + an Arduino:
+- Takes sound input with a microphone
+- Detects the notes that are being played
+- Turns the notes into Arduino code
+- Causes LEDs to change color based on the note
 
--Chris
+We referenced code from here to enable pitch detection:
+https://github.com/cwilso/PitchDetect
+
+- Mahima, Allison, Jesse, Justin
