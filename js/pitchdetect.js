@@ -300,6 +300,8 @@ function updateNoteList( note ) {
     console.log(noteList);
 }
 
+var ac = -1;
+
 function updatePitch( time ) {
 	var cycles = new Array;
 	analyser.getFloatTimeDomainData( buf );
