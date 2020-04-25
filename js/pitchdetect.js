@@ -50,12 +50,10 @@ class NoteList {
 
 
 // actions performed when the DOM is ready to execute JS
-var note = JSON.parse(localStorage.getItem('note'));
-if (note === null){
-    note = new NoteList();
-    localStorage.setItem('note', JSON.stringify(note));
-}
+var note = new NoteList();
+localStorage.setItem('note', JSON.stringify(note));
 
+var t = null
 
 window.onload = function() {
 	audioContext = new AudioContext();
@@ -303,7 +301,15 @@ function updateNoteList( note ) {
 function updatePitch( time ) {
 	var cycles = new Array;
 	analyser.getFloatTimeDomainData( buf );
-	var ac = autoCorrelate( buf, audioContext.sampleRate );
+	var tmp = autoCorrelate( buf, audioContext.sampleRate );
+	if(!t){
+		t=time;
+	}
+	elapsed = time - t;
+	if(elapsed > 250){
+		t = time;
+		ac = tmp;
+	}
 	// TODO: Paint confidence meter on canvasElem here.
 
 	if (DEBUGCANVAS) {  // This draws the current waveform, useful for debugging
