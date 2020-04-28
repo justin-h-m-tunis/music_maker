@@ -70,9 +70,11 @@ window.onload = function() {
 
 	detectorElem = document.getElementById( "detector" );
 	canvasElem = document.getElementById( "output" );
+
 	DEBUGCANVAS = document.getElementById( "waveform" );
 	if (DEBUGCANVAS) {
 		waveCanvas = DEBUGCANVAS.getContext("2d");
+		waveCanvas.fillstyle = "white";
 		waveCanvas.strokeStyle = "black";
 		waveCanvas.lineWidth = 1;
 	}
