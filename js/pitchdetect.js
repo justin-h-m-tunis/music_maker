@@ -75,7 +75,6 @@ window.onload = function() {
 	if (DEBUGCANVAS) {
 		waveCanvas = DEBUGCANVAS.getContext("2d");
 		waveCanvas.fillstyle = "white";
-		waveCanvas.strokeStyle = "black";
 		waveCanvas.lineWidth = 1;
 	}
 	pitchElem = document.getElementById( "pitch" );
@@ -195,6 +194,14 @@ function frequencyFromNoteNumber( note ) {
 	return 440 * Math.pow(2,(note-69)/12);
 }
 
+function colorFromNoteNumber( note ){
+	for (var i=0;i<noteStrings.length;i++) {
+		if (noteStrings(i) == note) {
+			waveCanvas.fillstyle = "red";
+		}
+	}
+}
+
 function centsOffFromPitch( frequency, note ) {
 	return Math.floor( 1200 * Math.log( frequency / frequencyFromNoteNumber( note ))/Math.log(2) );
 }
@@ -295,7 +302,7 @@ function autoCorrelate( buf, sampleRate ) {
 
 function updateNoteList( note ) {
     var noteList = JSON.parse(localStorage.getItem('note'));
-    noteList.notes.push(note);
+     noteList.notes.push(note);
     localStorage.setItem('note', JSON.stringify(noteList));
     console.log(noteList);
 }
@@ -353,6 +360,24 @@ function updatePitch( time ) {
 	 	var note =  noteFromPitch( pitch );
         updateNoteList(noteStrings[note%12]);
 		noteElem.innerHTML = noteStrings[note%12];
+		if (noteElem.innerHTML == noteStrings[0]){
+			document.body.style.cssText = "red";
+		} else if (noteElem.innerHTML == noteStrings[1]){
+			document.body.style.cssText = "maroon";
+		} else if (noteElem.innerHTML == noteStrings[2]){
+			document.body.style.cssText = "yellow";
+		} else if (noteElem.innerHTML == noteStrings[3]){
+		} else if (noteElem.innerHTML == noteStrings[4]){
+			document.body.style.cssText = "blue";
+		}
+		//for (var i=0;i<noteStrings.length;i++) {
+			//if (noteElem.innerHTML == noteStrings[i]) {
+				//waveCanvas.fillstyle = "red";
+			//}
+		//}
+
+
+
 		var detune = centsOffFromPitch( pitch, note );
 		if (detune == 0 ) {
 			detuneElem.className = "";
