@@ -53,3 +53,6 @@ textarea {
     font-family: Verdana, Arial, Helvetica, sans-serif;
     border: 3px solid black;
 }
+#led1{
+    opacity: 0.25;
+}
