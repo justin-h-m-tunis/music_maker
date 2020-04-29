@@ -360,9 +360,15 @@ function updatePitch( time ) {
 	 	var note =  noteFromPitch( pitch );
         updateNoteList(noteStrings[note%12]);
 		noteElem.innerHTML = noteStrings[note%12];
-		if (noteElem.innerHTML == noteStrings[0]){
-			document.body.style.cssText = "red";
-		} else if (noteElem.innerHTML == noteStrings[1]){
+		noteElem.innerHTML = noteStrings[4]; 
+
+		var led1 = document.getElementById("led1");
+
+		if (noteElem.innerHTML == noteStrings[4]){
+			led1.style.opacity = .1;
+		} 
+
+		/*else if (noteElem.innerHTML == noteStrings[1]){
 			document.body.style.cssText = "maroon";
 		} else if (noteElem.innerHTML == noteStrings[2]){
 			document.body.style.cssText = "yellow";
@@ -376,7 +382,7 @@ function updatePitch( time ) {
 				//waveCanvas.fillstyle = "red";
 			//}
 		//}
-
+       */
 
 
 		var detune = centsOffFromPitch( pitch, note );
