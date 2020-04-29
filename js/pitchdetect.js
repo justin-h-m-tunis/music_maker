@@ -365,7 +365,7 @@ function updatePitch( time ) {
 		var led1 = document.getElementById("led1");
 
 		if (noteElem.innerHTML == noteStrings[4]){
-			led1.style.opacity = .1;
+			led1.style.background-color = "blue";
 		} 
 
 		/*else if (noteElem.innerHTML == noteStrings[1]){
