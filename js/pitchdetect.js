@@ -184,6 +184,26 @@ var buflen = 1024;
 var buf = new Float32Array( buflen );
 
 var noteStrings = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+var noteColors = [
+				[255,0,24,0],
+				[255,82,34,0],
+				[255,165,44,0],
+				[255,210,60,0],
+				[255,255,65,0], 
+				[0,128,24,0], 
+				[0,64,125,0], 
+				[0,0,249,0], 
+				[37,0,190,0],
+				[75,0,130,0], 
+				[105,0,127,0],
+				[134,0,125,0]
+				];
+
+var noteLeds = [0,0,1,1,2,3,3,4,4,5,5,6];
+
+var fillSpeed = 64;
+var drainSpeed = 10;
+
 
 function noteFromPitch( frequency ) {
 	var noteNum = 12 * (Math.log( frequency / 440 )/Math.log(2) );
@@ -310,6 +330,7 @@ function updateNoteList( note ) {
 var ac = -1;
 
 function updatePitch( time ) {
+
 	var cycles = new Array;
 	analyser.getFloatTimeDomainData( buf );
 	var tmp = autoCorrelate( buf, audioContext.sampleRate );
@@ -320,6 +341,7 @@ function updatePitch( time ) {
 	if(elapsed > 250){
 		t = time;
 		ac = tmp;
+		for(var i = 0; i < 12; i++){noteColors[i][3] = (noteColors[i][3] >= drainSpeed) ? noteColors[i][3]-drainSpeed : 0;}
 	}
 	// TODO: Paint confidence meter on canvasElem here.
 
@@ -347,6 +369,8 @@ function updatePitch( time ) {
 		waveCanvas.stroke();
 	}
 
+		test = document.getElementById("test");
+		test.innerHTML = "3";
  	if (ac == -1) {
  		detectorElem.className = "vague";
 	 	pitchElem.innerText = "--";
@@ -360,13 +384,14 @@ function updatePitch( time ) {
 	 	var note =  noteFromPitch( pitch );
         updateNoteList(noteStrings[note%12]);
 		noteElem.innerHTML = noteStrings[note%12];
-		noteElem.innerHTML = noteStrings[4]; 
 
-		var led1 = document.getElementById("led1");
+		//updates appropriate color alpha (transparency)
+		noteColors[note%12][3] = (noteColors[note%12][3] <= 255-fillSpeed) ? noteColors[note%12][3] + fillSpeed : 255;
+		
+		//creates corresponding led colors (sharps and flats are weighted by alpha) 
+		
 
-		if (noteElem.innerHTML == noteStrings[4]){
-			led1.style.background-color = "blue";
-		} 
+
 
 		/*else if (noteElem.innerHTML == noteStrings[1]){
 			document.body.style.cssText = "maroon";
@@ -397,6 +422,32 @@ function updatePitch( time ) {
 			detuneAmount.innerHTML = Math.abs( detune );
 		}
 	}
+		var ledBkgColors = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]
+
+		for(var i = 0; i < 12; i++){
+			ledBkgColors[noteLeds[i]][0] += noteColors[i][0]*noteColors[i][3]/255.0;
+			ledBkgColors[noteLeds[i]][1] += noteColors[i][1]*noteColors[i][3]/255.0;
+			ledBkgColors[noteLeds[i]][2] += noteColors[i][2]*noteColors[i][3]/255.0;
+			ledBkgColors[noteLeds[i]][3] += noteColors[i][3]/255.0;		
+		}
+
+		for(var i = 0; i < 7; i++){
+
+			led_id = "led".concat(i.toString());
+
+			led = document.getElementById(led_id)
+			if(ledBkgColors[i][3]==0){
+				led.style.backgroundColor = "rgba(0,0,0,0)";
+			}
+			else{
+				led.style.backgroundColor = "rgba(".concat((ledBkgColors[i][0]/ledBkgColors[i][3]).toString(),",",
+													   (ledBkgColors[i][1]/ledBkgColors[i][3]).toString(),",",
+													   (ledBkgColors[i][2]/ledBkgColors[i][3]).toString(),",",
+													   (ledBkgColors[i][3]/2).toString(),")"
+													   );
+			}
+
+		}
 
 	if (!window.requestAnimationFrame)
 		window.requestAnimationFrame = window.webkitRequestAnimationFrame;
