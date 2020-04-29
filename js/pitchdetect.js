@@ -367,6 +367,7 @@ function updatePitch( time ) {
 		} else if (noteElem.innerHTML == noteStrings[2]){
 			document.body.style.cssText = "yellow";
 		} else if (noteElem.innerHTML == noteStrings[3]){
+			document.body.style.cssText = "lime";
 		} else if (noteElem.innerHTML == noteStrings[4]){
 			document.body.style.cssText = "blue";
 		}
