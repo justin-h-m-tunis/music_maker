@@ -53,3 +53,23 @@ textarea {
     font-family: Verdana, Arial, Helvetica, sans-serif;
     border: 3px solid black;
 }
+#led1{
+    opacity: 1;
+    z-index:0;
+    background-color: red;
+}
+
+#led2{
+    background-color: orange;
+}
+
+#led3{
+    background: yellow;
+}
+#led4{
+    background: green;
+}
+
+#led5{
+    background:blue;
+}

@@ -70,10 +70,11 @@ window.onload = function() {
 
 	detectorElem = document.getElementById( "detector" );
 	canvasElem = document.getElementById( "output" );
+
 	DEBUGCANVAS = document.getElementById( "waveform" );
 	if (DEBUGCANVAS) {
 		waveCanvas = DEBUGCANVAS.getContext("2d");
-		waveCanvas.strokeStyle = "black";
+		waveCanvas.fillstyle = "white";
 		waveCanvas.lineWidth = 1;
 	}
 	pitchElem = document.getElementById( "pitch" );
@@ -193,6 +194,14 @@ function frequencyFromNoteNumber( note ) {
 	return 440 * Math.pow(2,(note-69)/12);
 }
 
+function colorFromNoteNumber( note ){
+	for (var i=0;i<noteStrings.length;i++) {
+		if (noteStrings(i) == note) {
+			waveCanvas.fillstyle = "red";
+		}
+	}
+}
+
 function centsOffFromPitch( frequency, note ) {
 	return Math.floor( 1200 * Math.log( frequency / frequencyFromNoteNumber( note ))/Math.log(2) );
 }
@@ -293,10 +302,12 @@ function autoCorrelate( buf, sampleRate ) {
 
 function updateNoteList( note ) {
     var noteList = JSON.parse(localStorage.getItem('note'));
-    noteList.notes.push(note);
+     noteList.notes.push(note);
     localStorage.setItem('note', JSON.stringify(noteList));
     console.log(noteList);
 }
+
+var ac = -1;
 
 function updatePitch( time ) {
 	var cycles = new Array;
@@ -349,6 +360,31 @@ function updatePitch( time ) {
 	 	var note =  noteFromPitch( pitch );
         updateNoteList(noteStrings[note%12]);
 		noteElem.innerHTML = noteStrings[note%12];
+		noteElem.innerHTML = noteStrings[4]; 
+
+		var led1 = document.getElementById("led1");
+
+		if (noteElem.innerHTML == noteStrings[4]){
+			led1.style.background-color = "blue";
+		} 
+
+		/*else if (noteElem.innerHTML == noteStrings[1]){
+			document.body.style.cssText = "maroon";
+		} else if (noteElem.innerHTML == noteStrings[2]){
+			document.body.style.cssText = "yellow";
+		} else if (noteElem.innerHTML == noteStrings[3]){
+			document.body.style.cssText = "lime";
+		} else if (noteElem.innerHTML == noteStrings[4]){
+			document.body.style.cssText = "blue";
+		}
+		//for (var i=0;i<noteStrings.length;i++) {
+			//if (noteElem.innerHTML == noteStrings[i]) {
+				//waveCanvas.fillstyle = "red";
+			//}
+		//}
+       */
+
+
 		var detune = centsOffFromPitch( pitch, note );
 		if (detune == 0 ) {
 			detuneElem.className = "";
